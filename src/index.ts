@@ -11,3 +11,7 @@ app.use('/optimize_sql',optimizerRouter);
 app.get('/health',(_req,res)=> {
     res.json({status:'healthy'});
 });
+
+app.listen(PORT,()=> {
+    console.log('Server running at http://localhost:${PORT}');
+});
