@@ -24,8 +24,8 @@ router.post('/', async(req : Request,res: any) => {
         const sqlQuery = req.body?.sql_query?.trim();
             console.log("this is the sqlQuery ->",sqlQuery);
             if(!sqlQuery || sqlQuery.toLowerCase().startsWith('select')){
-                console.log("OKJKKKKK");
-            //return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
+               // console.log("OKKKKKK");
+            return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
         }
         const prompt = promptTemplate.replace('{sql_query}',sqlQuery);
         const optimized = await bedrockService.invokeModel(prompt);
