@@ -1,0 +1,8 @@
+{
+    "models":[
+        {
+            "name":"Claude V2",
+            "model_id":"anthropic.claude-v2:1"
+        }
+    ]
+}
