@@ -1,6 +1,6 @@
-import {ModelConfig} from '../types/modelTypes';
+import {ModelConfig, ModelConfigFile} from '../types/modelTypes';
 
-export function getModelByName(name : string, config: { models: ModelConfig[]}): ModelConfig {
+export function getModelByName(name : string, config: ModelConfigFile): ModelConfig {
     const model = config.models.find(m => m.name === name);
 
     if(!model) {
