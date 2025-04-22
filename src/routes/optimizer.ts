@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import path from 'path';
 import {JSONLoader} from '../utils/jsonUtils';
 import {BedrockService} from '../services/bedrockService';
@@ -15,8 +15,8 @@ interface SqlRequestBody {
     sql_query?:string;
 }
 
-router.post('/', async (req: Request<{},{}, SqlRequestBody>,res : Response) => {
-    const sqlQuery : string = req.body.sql_query || "" ;
+router.post('/', async (req: Request,res : Response) => {
+    const sqlQuery : string = req.body?.sql_query || "" ;
     if(!sqlQuery.trim().toLowerCase().startsWith('select')){
         return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
     }
