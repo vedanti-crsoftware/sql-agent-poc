@@ -10,7 +10,7 @@ const promptTemplate = JSONLoader.load(promptsPath).system_prompt;
 
 const bedrockService = new BedrockService(configPath);
 
-router.post('/',async(req,res) => {
+router.post('/', async (req,res) => {
     const sqlQuery = req.body.sql_query || "" ;
     if(!sqlQuery.trim().toLowerCase().startsWith('select')){
         return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
