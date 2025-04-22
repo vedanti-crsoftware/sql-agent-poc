@@ -1,6 +1,8 @@
 import fs from 'fs';
 
-export function loadJson<T=any>(filePath:string):T {
-    const data = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(data);
+export class JSONLoader {
+    static load(filepath: string): any {
+        const content = fs.readFileSync(filepath, 'utf-8');
+        return JSON.parse(content);
+    }
 }
