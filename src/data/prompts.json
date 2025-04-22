@@ -1,0 +1,3 @@
+{
+    "system_prompt":"Optimize the following SQL query:\n\n{sql_query}\n\n Return only the optimized version with no explaination and extra text."
+}
