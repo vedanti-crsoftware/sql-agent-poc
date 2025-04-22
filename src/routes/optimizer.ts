@@ -1,13 +1,14 @@
-import express, {Request, Response} from 'express';
+import express, {Router, Request, Response} from 'express';
 import path from 'path';
 import {JSONLoader} from '../utils/jsonUtils';
 import {BedrockService} from '../services/bedrockService';
 
-const router = express.Router();
-const promptsPath = path.join(__dirname,'../data/prompts.json');
-const configPath = path.join(__dirname,'../data/config.json');
+const router = Router();
 
-const {system_prompt: promptTemplate} = JSONLoader.load(promptsPath);
+const promptsPath = path.resolve(__dirname,'../data/prompts.json');
+const configPath = path.resolve(__dirname,'../data/config.json');
+
+const promptTemplate = JSONLoader.load(promptsPath).system_prompt;
 
 const bedrockService = new BedrockService(configPath);
 
@@ -15,9 +16,10 @@ interface SqlRequestBody {
     sql_query?:string;
 }
 
-router.post('/', async (req: Request,res : Response) => {
-    const sqlQuery : string = req.body?.sql_query || "" ;
-    if(!sqlQuery.trim().toLowerCase().startsWith('select')){
+router.post('/', async(req: Request<{},{},SqlRequestBody>,res : Response) => {
+    
+    const sqlQuery = req.body?.sql_query?.trim() || "" ;
+    if(!sqlQuery.toLowerCase().startsWith('select')){
         return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
     }
 
