@@ -3,34 +3,36 @@ import path from 'path';
 import {JSONLoader} from '../utils/jsonUtils';
 import {BedrockService} from '../services/bedrockService';
 
-const router = Router();
+const router = express.Router();
 
-const promptsPath = path.resolve(__dirname,'../data/prompts.json');
-const configPath = path.resolve(__dirname,'../data/config.json');
-
-const promptTemplate = JSONLoader.load(promptsPath).system_prompt;
-
-const bedrockService = new BedrockService(configPath);
 
 interface SqlRequestBody {
     sql_query?:string;
 }
 
-router.post('/', async(req: Request<{},{},SqlRequestBody>,res : Response) => {
+const promptsPath = path.resolve(__dirname,'../data/prompts.json');
+const configPath = path.resolve(__dirname,'../data/config.json');
+
+const bedrockService = new BedrockService(configPath);
+
+const promptTemplate = JSONLoader.load(promptsPath).system_prompt;
+
+
+router.post('/', async(req : Request,res: any) => {
     
-    const sqlQuery = req.body?.sql_query?.trim() || "" ;
-    if(!sqlQuery.toLowerCase().startsWith('select')){
-        return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
-    }
-
-    const prompt = promptTemplate.replace('{sql_query}',sqlQuery);
-
     try {
-        const optimizedQuery = await bedrockService.invokeModel(prompt);
-        res.json({optimized_query:optimizedQuery});
-    } catch (error: any) {
-        console.error('Error optimizing query', error);
-        res.status(500).json({error:'An error occured while optimizing the query'});
+        const sqlQuery = req.body?.sql_query?.trim();
+            console.log("this is the sqlQuery ->",sqlQuery);
+            if(!sqlQuery || sqlQuery.toLowerCase().startsWith('select')){
+                console.log("OKJKKKKK");
+            //return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
+        }
+        const prompt = promptTemplate.replace('{sql_query}',sqlQuery);
+        const optimized = await bedrockService.invokeModel(prompt);
+        return res.json({optimized_query: optimized});
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({error:'Optimization failed'});
     }
 });
 

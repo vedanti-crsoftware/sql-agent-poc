@@ -1,4 +1,4 @@
-export interface ModelConfig {
+export interface ModelConfig  {
     name: string;
-    model_id: string;
+    model_id: string; 
 }

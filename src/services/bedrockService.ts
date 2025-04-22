@@ -1,16 +1,24 @@
-import AWS from 'aws-sdk';
+import AWS, { Omics } from 'aws-sdk';
 import {JSONLoader} from '../utils/jsonUtils';
 import {getModelByName} from '../utils/modelUtils';
-import {modelConfig} from '../types/modelTypes';
+import {ModelConfig} from '../types/modelTypes';
+import fs from 'fs';
+import path from 'path';
+
 
 export class BedrockService {
-    private client: AWS.BedrockRuntime;
-    private modelId: string;
+     private client: AWS.BedrockRuntime;
+     private modelId: string;
+    private config: ModelConfig;
 
     constructor(configPath: string) {
-        const config = JSONLoader.load(configPath);
-        const selectedModel = getModelByName('Claude V2', config);
-        this.modelId = selectedModel.model_id;
+        // const configRaw = fs.readFileSync(path.resolve(configPath),'utf-8');
+        // const config = JSON.parse(configRaw);
+      
+        this.config = JSON.parse(fs.readFileSync(configPath,'utf-8'));
+        this.modelId = this.config.model_id || 'default-model';
+        // const selectedModel = getModelByName('Claude V2', config);
+        // this.modelId = selectedModel.model_id;
         this.client = new AWS.BedrockRuntime({region: 'us-east-1'});
     }
 
