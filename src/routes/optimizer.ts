@@ -6,12 +6,17 @@ import {BedrockService} from '../services/bedrockService';
 const router = express.Router();
 const promptsPath = path.join(__dirname,'../data/prompts.json');
 const configPath = path.join(__dirname,'../data/config.json');
-const promptTemplate = JSONLoader.load(promptsPath).system_prompt;
+
+const {system_prompt: promptTemplate} = JSONLoader.load(promptsPath);
 
 const bedrockService = new BedrockService(configPath);
 
-router.post('/', async (req,res) => {
-    const sqlQuery = req.body.sql_query || "" ;
+interface SqlRequestBody {
+    sql_query?:string;
+}
+
+router.post('/', async (req: Request<{},{}, SqlRequestBody>,res : Response) => {
+    const sqlQuery : string = req.body.sql_query || "" ;
     if(!sqlQuery.trim().toLowerCase().startsWith('select')){
         return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
     }
