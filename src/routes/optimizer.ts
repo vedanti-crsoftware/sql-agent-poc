@@ -23,11 +23,12 @@ router.post('/', async(req : Request,res: any) => {
     try {
         const sqlQuery = req.body?.sql_query?.trim();
             console.log("this is the sqlQuery ->",sqlQuery);
-            if(!sqlQuery || sqlQuery.toLowerCase().startsWith('select')){
+            if(!sqlQuery || !sqlQuery.trim().toLowerCase().startsWith('select')){
                // console.log("OKKKKKK");
             return res.status(400).json({error:'Only SELECT Statemenets are allowed'});
         }
         const prompt = promptTemplate.replace('{sql_query}',sqlQuery);
+        console.log("This is final prompt ->>>>>>",prompt);
         const optimized = await bedrockService.invokeModel(prompt);
         return res.json({optimized_query: optimized});
     } catch (err) {
