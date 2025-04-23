@@ -3,6 +3,10 @@
 This is a **Proof of Concept** to demonstrate how an **AI agent** can parse and optimize SQL queries using different foundation models available on AWS Bedrock
 
 ## Dependencies
+    express : ^5.0.1
+    node : ^22.14.1
+    ts-node-dev : ^2.0.0
+    typescript: ^5.8.3"
 
 ## Setup Instructions
 
@@ -20,7 +24,7 @@ cd sql-agent-poc
 npm install
 ```
 
-### 3. Set Enviornment Variables
+#### 3. Set Enviornment Variables
 Your .env file should include
 
 ```bash
@@ -30,7 +34,7 @@ AWS_SESSION_TOKEN=<YOUR_AWS_SESSION_TOKEN>
 AWS_REGION=<YOUR_AWS_REGION>
 ```
 
-### 4. Starting the server
+#### 4. Starting the server
 
 ```bash
 npm run dev
