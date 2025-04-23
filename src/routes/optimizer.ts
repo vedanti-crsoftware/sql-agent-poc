@@ -31,6 +31,7 @@ router.post('/', async(req : Request,res: any) => {
         console.log("This is final prompt ->>>>>>",prompt);
         const optimized = await bedrockService.invokeModel(prompt);
         const cleanOptimized = optimized.replace(/\n/g,'');
+        console.log('this is the response ->',cleanOptimized);
         return res.json({optimized_query: cleanOptimized});
     } catch (err) {
         console.error(err);
