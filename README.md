@@ -33,7 +33,7 @@ This is a **Proof of Concept** to demonstrate how an **AI agent** can parse and 
     express : v5.0.1
     node : v22.14.0
     ts-node-dev : v2.0.0
-    typescript: v5.8.3"
+    typescript : v5.8.3"
 
 ## Setup Instructions
 
