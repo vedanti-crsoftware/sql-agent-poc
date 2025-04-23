@@ -2,6 +2,40 @@
 
 This is a **Proof of Concept** to demonstrate how an **AI agent** can parse and optimize SQL queries using different foundation models available on AWS Bedrock.
 
+### Project Directory Structure
+
+```
+├── .dist/                  # Distribution/build directory
+├── node_modules/           # Node.js packages and dependencies
+|
+├── src/                    # Source code files
+|   ├── index.ts             # Entry Point
+|   ├── data/              # Configuration files
+|   |  └── config.json
+|   |  └── prompts.json
+|   |  └── sqlQueries.json
+|
+├── routes/ 
+|   ├── optimizer.ts         #Express route  
+|
+├── services/ 
+|   ├── bedrockService.ts    # Handles AWS bedrock interaction  
+|
+├── utils/ 
+|   ├── modelUtils.ts       # Utility function for models  
+|
+├── types/ 
+|   ├── modelTypes.ts       # Interface for models
+|
+├── .env                    # Environment variables
+├── .gitignore              # Git ignore file
+├── package-lock.json       # NPM package lock file
+├── package.json            # NPM package configuration
+├── README.md               # Project documentation
+└── tsconfig.json           # TypeScript configuration
+
+```
+
 ### Key Files and Their Roles
 
 #### 1. services/bedrockService.ts :
@@ -27,7 +61,6 @@ This is a **Proof of Concept** to demonstrate how an **AI agent** can parse and 
 
 #### 6. data/config.json :
 - Contains avaialable model configurations. structure is of ModelConfigFile interface defined in types/modelTypes.ts. It is an array of model with name, provider, model_id.
-
 
 ## Dependencies
     express : v5.0.1
