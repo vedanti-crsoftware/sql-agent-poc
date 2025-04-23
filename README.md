@@ -2,6 +2,27 @@
 
 This is a **Proof of Concept** to demonstrate how an **AI agent** can parse and optimize SQL queries using different foundation models available on AWS Bedrock
 
+### Key Files and Their Roles
+
+#### 1. bedrockService.ts :
+- This file contains the BedrockService class which is responsible for reading a configuration file (/data/config.json), and extracting model details using (/utils/modelUtils.ts), and setting up the AWS client for interaction with AWS Bedrock services
+
+#### 2.  : routes/optimizer.ts
+- This file contains the BedrockService class which is responsible for reading a configuration file (/data/config.json), and extracting model details using (/utils/modelUtils.ts), and setting up the AWS client for interaction with AWS Bedrock services
+
+#### 3. modelUtils.ts :
+- This file contains the helper function (getModelByName) for interacting with model data. This function accepts a model name and ModelConfigFile object(Interface defined in types/modelTypes.ts) and returns corressponding ModelConfig (Interface defined in types/modelTypes.ts) based on model name, throws error if the model is not found
+
+#### 4. modelTypes.ts :
+- This file contains the TypeScript interfaces (ModelConfig and ModelConfigFile) which defines the structure of config data
+- ModelConfig : Represents a single model's details like name, provider and model_id
+- ModelConfigFile : Represents the full configuration i.e an array of ModelCinfig Objects
+
+#### 5. index.ts :
+- This is the main entry point of application, it initalizes an express application, applies middleware (express.json() and bodyParser.json()). It also register the route '/optimize_sql' and '/health'. It starts the server on specified port
+
+
+
 ## Dependencies
     express : ^5.0.1
     node : ^22.14.1
