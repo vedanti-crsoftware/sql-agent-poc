@@ -30,10 +30,10 @@ This is a **Proof of Concept** to demonstrate how an **AI agent** can parse and 
 
 
 ## Dependencies
-    express : ^5.0.1
-    node : ^22.14.1
-    ts-node-dev : ^2.0.0
-    typescript: ^5.8.3"
+    express : v5.0.1
+    node : v22.14.0
+    ts-node-dev : v2.0.0
+    typescript: v5.8.3"
 
 ## Setup Instructions
 
