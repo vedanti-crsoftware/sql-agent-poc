@@ -37,6 +37,7 @@ npm run dev
 ```
 
 ### Technologies Used
+
 - TypeScript
 - Node.js
 - Express.js
