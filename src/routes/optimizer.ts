@@ -15,7 +15,7 @@ const configPath = path.resolve(__dirname,'../data/config.json');
 
 const bedrockService = new BedrockService(configPath);
 
-const promptTemplate = JSONLoader.load(promptsPath).system_prompt;
+const promptTemplate = JSONLoader.load(promptsPath).system_prompt2;
 
 
 router.post('/', async(req : Request,res: any) => {
