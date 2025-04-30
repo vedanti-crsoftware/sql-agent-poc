@@ -1,0 +1,309 @@
+{
+  "C:\\Projects Code\\sql-agent-poc\\serverless.yml": {
+    "versionFramework": "4.14.1",
+    "servicePath": "C:\\Projects Code\\sql-agent-poc\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "crssoftware",
+      "app": "sql-optimizer-poc",
+      "service": "sql-optimizer-agent",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs20.x",
+        "region": "us-east-1",
+        "timeout": 30,
+        "environment": {
+          "NODE_OPTIONS": "--enable-source-maps"
+        },
+        "stage": "dev",
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "ApiLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/sql-optimizer-agent-dev-api"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "sql-optimizer-agent",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sql-optimizer-agent-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sql-optimizer-agent-dev*:*:*"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "sql-optimizer-agent",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-us-east-1-62797585-7310"
+            }
+          }
+        }
+      },
+      "functions": {
+        "api": {
+          "handler": "dist/index.handler",
+          "events": [
+            {
+              "httpApi": {
+                "path": "/optimize_sql",
+                "method": "POST"
+              }
+            },
+            {
+              "httpApi": {
+                "path": "/health",
+                "method": "GET"
+              }
+            }
+          ],
+          "name": "sql-optimizer-agent-dev-api",
+          "package": {
+            "exclude": [
+              "node_modules/serverless-plugin-typescript"
+            ],
+            "include": [],
+            "patterns": []
+          }
+        }
+      },
+      "plugins": [
+        "serverless-offline",
+        "serverless-plugin-typescript"
+      ],
+      "package": {
+        "exclude": [
+          "node_modules/**",
+          "src/",
+          ".gitignore",
+          ".git/**",
+          "README.md",
+          "tsconfig.json",
+          "package-lock.json"
+        ],
+        "artifactsS3KeyDirname": "serverless/sql-optimizer-agent/dev/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-us-east-1-62797585-7310"
+      },
+      "custom": {
+        "serverless-offline": {
+          "httpPort": 3000
+        }
+      },
+      "build": {
+        "esbuild": false
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs20.x",
+      "region": "us-east-1",
+      "timeout": 30,
+      "environment": {
+        "NODE_OPTIONS": "--enable-source-maps"
+      },
+      "stage": "dev",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ApiLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/sql-optimizer-agent-dev-api"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "sql-optimizer-agent",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup",
+                          "logs:TagResource"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sql-optimizer-agent-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sql-optimizer-agent-dev*:*:*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "sql-optimizer-agent",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-62797585-7310"
+          }
+        }
+      }
+    },
+    "dashboard": {
+      "isEnabledForService": true,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": {
+        "providers": false,
+        "monitoring": false
+      },
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": "6VB11VLDQ8vGlrt87V",
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "error": {
+      "message": "Cannot read properties of undefined (reading 'getLineAndCharacterOfPosition')",
+      "stack": "TypeError: Cannot read properties of undefined (reading 'getLineAndCharacterOfPosition')\n    at <anonymous> (C:\\Projects Code\\sql-agent-poc\\node_modules\\serverless-plugin-typescript\\src\\typescript.ts:85:49)\n    at Array.forEach (<anonymous>)\n    at Object.<anonymous> (C:\\Projects Code\\sql-agent-poc\\node_modules\\serverless-plugin-typescript\\src\\typescript.ts:81:18)\n    at Generator.next (<anonymous>)\n    at C:\\Projects Code\\sql-agent-poc\\node_modules\\serverless-plugin-typescript\\dist\\src\\typescript.js:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Projects Code\\sql-agent-poc\\node_modules\\serverless-plugin-typescript\\dist\\src\\typescript.js:4:12)\n    at Object.run (C:\\Projects Code\\sql-agent-poc\\node_modules\\serverless-plugin-typescript\\src\\typescript.ts:73:75)\n    at TypeScriptPlugin.<anonymous> (C:\\Projects Code\\sql-agent-poc\\node_modules\\serverless-plugin-typescript\\src\\index.ts:190:42)\n    at Generator.next (<anonymous>)"
+    },
+    "serviceRawFile": "# \"org\" ensures this Service is used with the correct Serverless Framework Access Key.\norg: crssoftware\n# \"app\" enables Serverless Framework Dashboard features and sharing them with other Services.\napp: sql-optimizer-poc\n# \"service\" is the name of this project. This will also be added to your AWS resource names.\nservice: sql-optimizer-agent\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  region: us-east-1\n  timeout: 30\n  environment:\n    NODE_OPTIONS: \"--enable-source-maps\"\n\nfunctions:\n  api:\n    handler: dist/index.handler\n    events:\n    - httpApi:\n        path: /optimize_sql\n        method: POST  \n    - httpApi:\n        path: /health\n        method: GET\n\nplugins:\n  - serverless-offline\n  - serverless-plugin-typescript\n\npackage:\n  exclude:\n    - node_modules/**\n    - src/\n    - .gitignore\n    - .git/**\n    - README.md\n    - tsconfig.json\n    - package-lock.json\n\ncustom:\n  serverless-offline:\n    httpPort: 3000\n\nbuild:\n  esbuild: false",
+    "command": [
+      "deploy"
+    ],
+    "options": {
+      "debug": "*"
+    },
+    "orgId": "103a55fb-e568-4756-a7b7-d372c966ea5a",
+    "orgName": "crssoftware",
+    "userId": "3b8RrnlvYbSyGq58lR",
+    "userName": "crssoftware",
+    "serviceProviderAwsAccountId": "852537407985",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

@@ -1,0 +1,49 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: crssoftware
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: sql-optimizer-poc
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: sql-optimizer-agent
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+  
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  timeout: 30
+  environment:
+    AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
+    AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
+    AWS_REGION: ${env:AWS_REGION}
+    IS_OFFLINE: true
+    
+functions:
+  api:
+    handler: index.handler
+    events:
+    - http:
+        path: optimize_sql
+        method: POST  
+    - http:
+        path: health
+        method: GET
+
+
+
+package:
+  exclude:
+    - node_modules/**
+    - src/
+    - .gitignore
+    - .git/**
+    - README.md
+    - tsconfig.json
+    - package-lock.json
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+
