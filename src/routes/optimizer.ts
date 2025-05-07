@@ -10,6 +10,7 @@ interface SqlRequestBody {
     sql_query?:string;
 }
 
+
 const promptsPath = path.resolve(__dirname,'../data/prompts.json');
 const configPath = path.resolve(__dirname,'../data/config.json');
 
@@ -32,6 +33,8 @@ router.post('/', async(req : Request,res: any) => {
         const optimized = await bedrockService.invokeModel(prompt);
         const cleanOptimized = optimized.replace(/\n/g,'');
         console.log('this is the response ->',cleanOptimized);
+        console.log('SENDING YOU RESPONESEE ->');
+        
         return res.json({optimized_query: cleanOptimized});
     } catch (err) {
         console.error(err);

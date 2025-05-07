@@ -1,0 +1,29 @@
+{
+    "models":[
+        {
+            "name":"Claude V2",
+            "provider":"Anthropic",
+            "model_id":"anthropic.claude-v2:1"
+        },
+        {
+            "name":"Claude",
+            "provider":"Anthropic",
+            "model_id":"anthropic.claude-v2"
+        },
+        {
+            "name":"Claude Haiku",
+            "provider":"Anthropic",
+            "model_id":"anthropic.claude-3-haiku-20240307-v1:0"
+        },
+        {
+            "name":"Claude 3 Sonnet",
+            "provider":"Anthropic",
+            "model_id":"anthropic.claude-3-sonnet-20240229-v1:0"
+        },
+        {
+            "name":"Claude Instant",
+            "provider":"Anthropic",
+            "model_id":"anthropic.claude-instant-v1"
+        }
+    ]
+}

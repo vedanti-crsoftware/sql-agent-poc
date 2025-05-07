@@ -1,0 +1,21 @@
+service: sql-optimizer-service
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+
+functions:
+  api:
+    name: sql-optimizer-agent
+    handler: lambda.handler 
+    events:
+      - httpApi: 
+         path: /health
+         method: get
+      - httpApi: 
+         path: /optimize_sql
+         method: post
+      
+    
+       

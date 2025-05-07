@@ -26,15 +26,15 @@ export class BedrockService {
     }
 
     async invokeModel(prompt: string): Promise<string> {
-        const accessKey = process.env.AWS_ACCESS_KEY_ID;
-        const secretKey = process.env.AWS_SECRET_ACCESS_KEY;
-        const region = process.env.AWS_REGION;
-        console.log("Model id -> ",this.modelId);
-        //console.log("Model id -> ",this.modelId);
+        // const accessKey = process.env.AWS_ACCESS_KEY_ID;
+        // const secretKey = process.env.AWS_SECRET_ACCESS_KEY;
+        // const region = process.env.AWS_REGION;
+        // console.log("Model id -> ",this.modelId);
+        // //console.log("Model id -> ",this.modelId);
         
-        if(!accessKey || !secretKey || !region) {
-            throw new Error("Missing AWS creds");
-        }
+        // if(!accessKey || !secretKey || !region) {
+        //     throw new Error("Missing AWS creds");
+        // }
         console.log("Prompt sent ->", prompt);
         const body = JSON.stringify({
             prompt,
@@ -44,14 +44,30 @@ export class BedrockService {
             anthropic_version:'bedrock-2023-05-31'
         });
 
-        const response = await this.client.invokeModel({
-            modelId: this.modelId,
-            contentType:'application/json',
-            accept:'application/json',
-            body
-        }).promise();
+        var response = null;
+        try {
+            console.log('this is the try invoke model ');
+            
+            response = await this.client.invokeModel({
+                modelId: this.modelId,
+                contentType:'application/json',
+                accept:'application/json',
+                body
+            }).promise();
+            console.log('this is after try invoke model ');
+            
 
-        const responseBody = JSON.parse(response.body!.toString('utf-8'));
-        return responseBody.completion?.trim() || "";
+            const responseBody = JSON.parse(response.body!.toString('utf-8'));
+            console.log("this is responsebody",responseBody);
+            return responseBody.completion?.trim() || "";
+        }
+        catch(error) {
+
+            console.log("errorrr",error);
+            return "nullliss";
+        }
+        
+
+   
     }
 }
