@@ -16,7 +16,7 @@ const configPath = path.resolve(__dirname,'../data/config.json');
 
 const bedrockService = new BedrockService(configPath);
 
-const promptTemplate = JSONLoader.load(promptsPath).system_prompt2;
+const promptTemplate = JSONLoader.load(promptsPath).system_prompt5;
 
 
 router.post('/', async(req : Request,res: any) => {
@@ -31,7 +31,8 @@ router.post('/', async(req : Request,res: any) => {
         const prompt = promptTemplate.replace('{sql_query}',sqlQuery);
         console.log("This is final prompt ->>>>>>",prompt);
         const optimized = await bedrockService.invokeModel(prompt);
-        const cleanOptimized = optimized.replace(/\n/g,'');
+         const cleanOptimized = optimized.replace(/\n/g,'');
+        //const cleanOptimized = optimized.replace(/\s+/g,'').trim();
         console.log('this is the response ->',cleanOptimized);
         console.log('SENDING YOU RESPONESEE ->');
         
