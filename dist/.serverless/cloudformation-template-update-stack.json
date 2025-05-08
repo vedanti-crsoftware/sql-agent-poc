@@ -65,6 +65,13 @@
                       "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sql-optimizer-agent:*:*"
                     }
                   ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject"
+                  ],
+                  "Resource": "arn:aws:s3:::sql-optimizer-configs/data/*"
                 }
               ]
             }
@@ -91,7 +98,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "serverless-framework-deployments-us-east-1-62797585-7310",
-          "S3Key": "serverless/sql-optimizer-service/dev/1746625265371-2025-05-07T13:41:05.371Z/sql-optimizer-service.zip"
+          "S3Key": "serverless/sql-optimizer-service/dev/1746729601918-2025-05-08T18:40:01.918Z/sql-optimizer-service.zip"
         },
         "Handler": "lambda.handler",
         "Runtime": "nodejs20.x",
@@ -109,14 +116,14 @@
         "ApiLogGroup"
       ]
     },
-    "ApiLambdaVersionUFIFGdJL7Sa0cLdS3kBaPmANVegaElP2AAUkE4ni5y8": {
+    "ApiLambdaVersion5otZ15Td7eoXNac6fAt4V5VHWrc59Sss3NNIEeql4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ApiLambdaFunction"
         },
-        "CodeSha256": "YneQIX9HkuDYEpTp2H2FBM+MGY/L9Fpj4yN6mxD1w5w="
+        "CodeSha256": "5t29WABLWNuC/eYqMkB8kFBDS5P6uGMz98sDvrKYB58="
       }
     },
     "HttpApi": {
@@ -246,7 +253,7 @@
     "ApiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ApiLambdaVersionUFIFGdJL7Sa0cLdS3kBaPmANVegaElP2AAUkE4ni5y8"
+        "Ref": "ApiLambdaVersion5otZ15Td7eoXNac6fAt4V5VHWrc59Sss3NNIEeql4"
       },
       "Export": {
         "Name": "sls-sql-optimizer-service-dev-ApiLambdaFunctionQualifiedArn"
