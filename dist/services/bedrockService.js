@@ -6,16 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BedrockService = void 0;
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const modelUtils_1 = require("../utils/modelUtils");
-const fs_1 = __importDefault(require("fs"));
 class BedrockService {
-    constructor(configPath) {
-        const configRaw = fs_1.default.readFileSync(configPath, 'utf-8');
-        this.config = JSON.parse(configRaw);
-        console.log("this is config", this.config);
+    constructor(config) {
+        this.config = config;
+        //const configRaw = fs.readFileSync(configPath,'utf-8');
+        //this.config = JSON.parse(configRaw);
+        console.log("Loaded config:", this.config);
         //this.modelId = this.config.model_id || 'default-model';
         const selectedModel = (0, modelUtils_1.getModelByName)('Claude V2', this.config);
         this.modelId = selectedModel.model_id;
-        console.log("this is modelID", this.modelId);
+        console.log("Selected model ID:", this.modelId);
         this.client = new aws_sdk_1.default.BedrockRuntime({ region: 'us-east-1' });
     }
     async invokeModel(prompt) {
@@ -35,10 +35,10 @@ class BedrockService {
             top_p: 0.9,
             anthropic_version: 'bedrock-2023-05-31'
         });
-        var response = null;
+        //var response = null;
         try {
             console.log('this is the try invoke model ');
-            response = await this.client.invokeModel({
+            const response = await this.client.invokeModel({
                 modelId: this.modelId,
                 contentType: 'application/json',
                 accept: 'application/json',
@@ -50,8 +50,8 @@ class BedrockService {
             return responseBody.completion?.trim() || "";
         }
         catch (error) {
-            console.log("errorrr", error);
-            return "error";
+            console.log("Error invoking Model", error);
+            return "Invoking Model failed !";
         }
     }
 }

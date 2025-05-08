@@ -4,7 +4,7 @@ export function getModelByName(name : string, config: ModelConfigFile): ModelCon
     const model = config.models.find(m => m.name === name);
 
     if(!model) {
-        throw new Error(`Mpdel "${name}" not found in config`);
+        throw new Error(`Model "${name}" not found in config`);
     }
     return model;
 }
