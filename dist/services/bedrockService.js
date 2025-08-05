@@ -7,13 +7,17 @@ exports.BedrockService = void 0;
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const modelUtils_1 = require("../utils/modelUtils");
 class BedrockService {
+    client;
+    modelId;
+    config;
     constructor(config) {
         this.config = config;
         //const configRaw = fs.readFileSync(configPath,'utf-8');
         //this.config = JSON.parse(configRaw);
         console.log("Loaded config:", this.config);
         //this.modelId = this.config.model_id || 'default-model';
-        const selectedModel = (0, modelUtils_1.getModelByName)('Claude V2', this.config);
+        const modelName = this.config.models[0].name;
+        const selectedModel = (0, modelUtils_1.getModelByName)(modelName, this.config);
         this.modelId = selectedModel.model_id;
         console.log("Selected model ID:", this.modelId);
         this.client = new aws_sdk_1.default.BedrockRuntime({ region: 'us-east-1' });

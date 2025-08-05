@@ -7,8 +7,8 @@ import path from 'path';
 
 
 export class BedrockService {
-     private client: AWS.BedrockRuntime;
-     private modelId: string;
+    private client: AWS.BedrockRuntime;
+    private modelId: string;
     private config: ModelConfigFile;
 
     constructor(config: ModelConfigFile) {
@@ -19,8 +19,8 @@ export class BedrockService {
 
         console.log("Loaded config:", this.config);
          //this.modelId = this.config.model_id || 'default-model';
-        
-        const selectedModel = getModelByName('Claude V2',this.config);
+        const modelName = this.config.models[0].name;
+        const selectedModel = getModelByName(modelName,this.config);
         
         this.modelId = selectedModel.model_id;
         console.log("Selected model ID:", this.modelId);
@@ -37,6 +37,7 @@ export class BedrockService {
         // if(!accessKey || !secretKey || !region) {
         //     throw new Error("Missing AWS creds");
         // }
+
         console.log("Prompt sent ->", prompt);
         const body = JSON.stringify({
             prompt,

@@ -5,5 +5,6 @@ export interface ModelConfig  {
 }
 
 export interface ModelConfigFile {
+    default_model: string;
     models: ModelConfig[];
 }
